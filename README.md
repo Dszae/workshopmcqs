@@ -2,7 +2,7 @@
 
 A high-performance, mobile-responsive web application designed for engineering students to practice and master **ENME 106 Engineering Workshop** curriculum through comprehensive chapter-wise Multiple Choice Questions (MCQs).
 
-🌐 **Live Practice Portal:** [workshopmcqs.github.io](https://dszae.github.io/workshopmcqs/) (or your deployed domain)
+🌐 **Live Practice Portal:** [workshopmcqs.github.io](https://dszae.github.io/workshopmcqs/) 
 
 ---
 
