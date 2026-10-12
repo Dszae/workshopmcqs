@@ -2,8 +2,8 @@
 import QuestionCard from './components/QuestionCard';
 import { chaptersConfig } from './data/mcqData';
 
-const STORAGE_KEY = 'workshop_mcqs_state_v2';
-const STATE_VERSION = 2;
+const STORAGE_KEY = 'workshop_mcqs_state_v3';
+const STATE_VERSION = 3;
 const QUESTIONS_PER_PAGE = 8;
 
 function readStoredState(questionIds) {
@@ -11,13 +11,7 @@ function readStoredState(questionIds) {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved && saved.version === STATE_VERSION) return { ...defaults, ...saved };
-    const oldAnswers = JSON.parse(localStorage.getItem('workshop_answers') || '{}');
-    const oldBookmarks = JSON.parse(localStorage.getItem('workshop_bookmarks') || '[]');
-    return {
-      ...defaults,
-      answers: Object.fromEntries(Object.entries(oldAnswers || {}).filter(([id, value]) => questionIds.has(Number(id)) && Number.isInteger(value))),
-      bookmarks: Array.isArray(oldBookmarks) ? oldBookmarks.filter((id) => questionIds.has(Number(id))) : [],
-    };
+    return defaults;
   } catch {
     return defaults;
   }
