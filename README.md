@@ -1,58 +1,110 @@
-# Engineering Workshop MCQ Bank (ENME 106)
+# WorkshopMCQs
 
-A high-performance, mobile-responsive web application designed for engineering students to practice and master **ENME 106 Engineering Workshop** curriculum through comprehensive chapter-wise Multiple Choice Questions (MCQs).
+A browser-based MCQ learning platform for **ENME 106 Engineering Workshop**. Study chapter by chapter, practise with immediate feedback, run exam simulations, and keep revision progress locally in your browser.
 
-🌐 **Live Practice Portal:** [workshopmcqs.github.io](https://dszae.github.io/workshopmcqs/) 
+**Live app:** https://dszae.github.io/workshopmcqs/
 
----
+## What it includes
 
-## 🚀 Key Features
+- Eight curriculum modules covering workshop safety, bench work, thread cutting, sheet metal, machine tools, forging and casting, welding, and brazing and soldering.
+- Learning mode with immediate answer feedback, explanations, and the reference links already supplied with the question data.
+- Search across question text, answer options, and chapter names.
+- Combined filters for chapter, unanswered questions, incorrect answers, bookmarks, and later review.
+- Bookmarks and later-review marks for building a personal revision queue.
+- Exam practice with configurable question count, optional chapter selection, randomized question and option order, question navigation, and optional countdown timing.
+- Exam results with score, attempted count, unanswered count, accuracy, and a complete answer review.
+- Progress dashboard with overall accuracy, attempted questions, bookmark count, chapter coverage, and recent exam attempts.
+- Dark and light themes with saved preference, responsive layouts, keyboard focus states, semantic controls, and reduced-motion support.
+- Progress export and validated JSON import for moving saved study data between browsers.
 
-* **Complete Syllabus Coverage:** Chapter-wise MCQs spanning Workshop Safety, Bench Work & Fitting, Thread Cutting, Sheet Metal, Machine Tools, Forging & Casting, Welding, and Brazing & Soldering.
-* **Instant Feedback & Resources:** Immediate correct/incorrect evaluations accompanied by detailed explanations and external reference links for deep learning.
-* **Smart Bookmarking:** Flag tricky or important questions and filter them instantly into a dedicated review tab.
-* **Persistent Progress:** Built with LocalStorage integration to automatically save answered questions and scores across sessions.
-* **Adaptive Dark/Light Mode:** Seamless theme toggle designed for comfortable studying at any time of day.
-* **Mobile-First Responsive UI:** Optimized touch targets and fluid scaling for smartphones, tablets, and desktop displays.
-* **Search and Revision:** Search question text and options, combine chapter/status filters, bookmark questions, and mark questions for later review.
-* **Exam Practice:** Configure chapter scope, question count, random order, optional timing, unanswered-question confirmation, and post-attempt answer review.
-* **Progress Dashboard:** See actual attempted-question accuracy, chapter coverage, revision lists, and recent exam attempts without invented streaks.
-* **Portable Progress:** Export a versioned JSON progress file or safely merge a validated import in the current browser.
+## Learning modes
 
----
+### Learn
 
-## 🛠️ Built With
+Questions are shown in the normal bank with immediate feedback. Once an answer is selected, the card identifies the selected and correct answers and shows the verified explanation.
 
-* **Frontend:** React, Vite, HTML5, CSS3 (Modern Flexbox & CSS Variables)
-* **State Management:** React Hooks (`useState`, `useMemo`, `useEffect`), LocalStorage API
-* **Version Control & Hosting:** Git, GitHub, Vercel / GitHub Pages
+### Exam practice
 
-Progress is stored locally in the browser under a versioned schema. Imports merge valid answers and saved lists; unknown question identifiers and malformed files are rejected safely.
+Exam mode keeps answers and explanations hidden until submission. It supports unanswered-question confirmation and automatically submits when a timed attempt reaches zero. Each new attempt uses a fresh randomized question set.
 
----
+### Progress and revision
 
-## 📖 Curriculum Modules Covered
+Progress is calculated from recorded answers and is not presented as a streak or prediction. The dashboard separates saved question accuracy from recent exam-attempt results. Revision combines bookmarked, incorrect, and later-review questions.
 
-1. **Module 1: Workshop Safety Measures** – PPE, general/machine safety, and protocols.
-2. **Module 2: Bench Work & Fitting** – Try squares, chisels, files, calipers, and punches.
-3. **Module 3: Thread Cutting** – Taps for internal threads and dies for external threads.
-4. **Module 4: Sheet Metal Work** – Aviation snips, riveting, and sheet forming tools.
-5. **Module 5: Machine Tools** – Lathe components, operations (turning, facing, boring), drill presses, and jigs.
-6. **Module 6: Forging & Casting** – Blacksmithing tools, open/closed die forging, patterns, copes, and drags.
-7. **Module 7: Welding Technology** – Gas welding flames, arc welding polarities, TIG/MIG processes, and weld defects.
-8. **Module 8: Brazing, Soldering & Electrical** – Temperature thresholds, capillary action, and fluxes.
+## Data and privacy
 
----
+The app has no backend, account system, or cloud synchronization. Study data stays in the browser's LocalStorage.
 
-## 👤 Author
+The current storage key is `workshop_mcqs_state_v2`. The state is versioned and includes:
 
-**Dipesh Sapkota**  
-* Portfolio: [dipeshsapkota7.com.np](https://www.dipeshsapkota7.com.np/)  
-* GitHub: [@dszae](https://github.com/dszae)  
-* LinkedIn: [in/dszae](https://linkedin.com/in/dszae)
+- Saved answers
+- Bookmarks
+- Later-review marks
+- Theme preference
+- Recent exam attempts
 
----
+Existing `workshop_answers` and `workshop_bookmarks` data is migrated when possible. Malformed storage is ignored safely. Imports must contain the supported version and valid structures; unknown question identifiers and invalid answer indexes are excluded. Imports merge valid answers and saved lists into the current browser state.
 
-## 📄 License
+## Project structure
 
-This project is open-source and available under the [MIT License](LICENSE).
+```text
+src/
+  App.jsx                 Main navigation, learning state, exams, dashboard, and persistence
+  components/
+    QuestionCard.jsx      Accessible learning-mode question card
+  data/
+    mcqData.js            Original chapter and question data
+  index.css               Responsive theme and component styles
+  types.ts                Question and chapter type documentation
+```
+
+Question content is kept in `src/data/mcqData.js`. Each question uses the existing tuple format:
+
+```js
+[questionText, options, correctOptionIndex, explanation, resourceLink]
+```
+
+The app creates stable numeric IDs from the chapter order. Do not reorder or remove existing questions without considering saved progress compatibility.
+
+## Local development
+
+Requirements: Node.js and npm.
+
+```bash
+npm install
+npm run dev
+```
+
+The development server is available at the URL printed by Vite. The configured GitHub Pages base path is `/workshopmcqs/`.
+
+## Checks and production build
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+`npm run lint` uses Oxlint. `npm run build` creates the deployable `dist/` directory.
+
+## Deployment
+
+The Vite configuration uses:
+
+```js
+base: '/workshopmcqs/'
+```
+
+Keep this base path when deploying to the `dszae/workshopmcqs` GitHub Pages project. Build the project and publish the generated `dist/` directory using the repository's deployment workflow.
+
+## Author
+
+**Dipesh Sapkota**
+
+- Portfolio: https://www.dipeshsapkota7.com.np/
+- GitHub: https://github.com/dszae
+- LinkedIn: https://linkedin.com/in/dszae
+
+## License
+
+This project is open source. Add a license file before distributing it under a specific license.
