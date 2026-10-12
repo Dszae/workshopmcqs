@@ -1,3 +1,5 @@
+import { Bookmark, Clock3 } from 'lucide-react';
+
 export default function QuestionCard({
   id,
   question,
@@ -20,8 +22,8 @@ export default function QuestionCard({
       <div className="card-top-row">
         <h3 id={`question-${id}`} className="question-text"><span className="q-number">Q{id}.</span> {question}</h3>
         <div className="card-actions">
-          <button className={`icon-button ${isBookmarked ? 'active' : ''}`} onClick={() => onToggleBookmark(id)} aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark question'} aria-pressed={isBookmarked} title={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}>★</button>
-          <button className={`icon-button ${isReview ? 'active review-active' : ''}`} onClick={() => onToggleReview(id)} aria-label={isReview ? 'Remove later review mark' : 'Mark for later review'} aria-pressed={isReview} title={isReview ? 'Remove later review mark' : 'Mark for later review'}>Review</button>
+          <button className={`icon-button ${isBookmarked ? 'active' : ''}`} onClick={() => onToggleBookmark(id)} aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark question'} aria-pressed={isBookmarked} title={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}><Bookmark size={17} fill={isBookmarked ? 'currentColor' : 'none'} aria-hidden="true" /></button>
+          <button className={`icon-button ${isReview ? 'active review-active' : ''}`} onClick={() => onToggleReview(id)} aria-label={isReview ? 'Remove later review mark' : 'Mark for later review'} aria-pressed={isReview} title={isReview ? 'Remove later review mark' : 'Mark for later review'}><Clock3 size={17} aria-hidden="true" /></button>
         </div>
       </div>
       <fieldset className="options-list">
