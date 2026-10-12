@@ -1,80 +1,47 @@
-export default function QuestionCard({ 
-  id, 
-  question, 
-  options, 
-  correctIdx, 
-  explanation, 
-  resourceLink, 
-  selectedOption, 
-  onSelectOption, 
-  isBookmarked, 
-  onToggleBookmark 
+export default function QuestionCard({
+  id,
+  question,
+  options,
+  correctIdx,
+  explanation,
+  resourceLink,
+  selectedOption,
+  onSelectOption,
+  isBookmarked,
+  onToggleBookmark,
+  isReview,
+  onToggleReview,
 }) {
   const isAnswered = selectedOption !== null;
   const isCorrect = selectedOption === correctIdx;
 
   return (
-    <div className={`question-card ${isBookmarked ? 'bookmarked-card' : ''}`}>
+    <article className={`question-card ${isBookmarked ? 'bookmarked-card' : ''}`} aria-labelledby={`question-${id}`}>
       <div className="card-top-row">
-        <h4 className="question-text">
-          <span className="q-number">Q{id}.</span> 
-          {question}
-        </h4>
-        <button 
-          className={`bookmark-btn ${isBookmarked ? 'active' : ''}`}
-          onClick={() => onToggleBookmark(id)}
-          title="Bookmark for review"
-          aria-label="Bookmark"
-        >
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
-          </svg>
-        </button>
-      </div>
-      
-      <div className="options-list">
-        {options.map((opt, idx) => {
-          let className = "option-label";
-          if (isAnswered) {
-            className += " disabled";
-            if (idx === correctIdx) className += " correct";
-            else if (idx === selectedOption) className += " wrong";
-          }
-
-          return (
-            <label key={idx} className={className}>
-              <input
-                type="radio"
-                name={`question-${id}`}
-                className="option-input"
-                disabled={isAnswered}
-                checked={selectedOption === idx}
-                onChange={() => onSelectOption(id, idx)}
-              />
-              <span>{opt}</span>
-            </label>
-          );
-        })}
-      </div>
-
-      {isAnswered && (
-        <div className={`feedback-box ${isCorrect ? 'correct' : 'wrong'}`}>
-          <div className="feedback-title">
-            {isCorrect ? '✅ Correct!' : '❌ Incorrect.'}
-          </div>
-          <div>
-            <strong>Explanation: </strong>{explanation}
-          </div>
-          
-          {resourceLink && (
-            <div className="resource-link-wrapper">
-              <a href={resourceLink} target="_blank" rel="noopener noreferrer" className="resource-link">
-                🔗 Read more about this topic
-              </a>
-            </div>
-          )}
+        <h3 id={`question-${id}`} className="question-text"><span className="q-number">Q{id}.</span> {question}</h3>
+        <div className="card-actions">
+          <button className={`icon-button ${isBookmarked ? 'active' : ''}`} onClick={() => onToggleBookmark(id)} aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark question'} aria-pressed={isBookmarked} title={isBookmarked ? 'Remove bookmark' : 'Bookmark question'}>★</button>
+          <button className={`icon-button ${isReview ? 'active review-active' : ''}`} onClick={() => onToggleReview(id)} aria-label={isReview ? 'Remove later review mark' : 'Mark for later review'} aria-pressed={isReview} title={isReview ? 'Remove later review mark' : 'Mark for later review'}>Review</button>
         </div>
-      )}
-    </div>
+      </div>
+      <fieldset className="options-list">
+        <legend className="sr-only">Choose an answer</legend>
+        {options.map((option, index) => {
+          let className = 'option-label';
+          if (isAnswered) {
+            className += ' disabled';
+            if (index === correctIdx) className += ' correct';
+            else if (index === selectedOption) className += ' wrong';
+          }
+          return <label key={`${id}-${index}`} className={className}>
+            <input type="radio" name={`question-${id}`} disabled={isAnswered} checked={selectedOption === index} onChange={() => onSelectOption(id, index)} />
+            <span>{option}</span>
+            {isAnswered && index === correctIdx && <strong className="answer-tag">Correct</strong>}
+            {isAnswered && index === selectedOption && index !== correctIdx && <strong className="answer-tag">Your answer</strong>}
+          </label>;
+        })}
+      </fieldset>
+      {isAnswered && <div className={`feedback-box ${isCorrect ? 'correct' : 'wrong'}`} role="status"><strong>{isCorrect ? 'Correct.' : 'Not quite.'}</strong><p><strong>Explanation:</strong> {explanation}</p>{resourceLink && <a href={resourceLink} target="_blank" rel="noopener noreferrer" className="resource-link">Read more about this topic</a>}</div>}
+    </article>
   );
 }

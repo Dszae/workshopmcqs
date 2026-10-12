@@ -14,6 +14,10 @@ A high-performance, mobile-responsive web application designed for engineering s
 * **Persistent Progress:** Built with LocalStorage integration to automatically save answered questions and scores across sessions.
 * **Adaptive Dark/Light Mode:** Seamless theme toggle designed for comfortable studying at any time of day.
 * **Mobile-First Responsive UI:** Optimized touch targets and fluid scaling for smartphones, tablets, and desktop displays.
+* **Search and Revision:** Search question text and options, combine chapter/status filters, bookmark questions, and mark questions for later review.
+* **Exam Practice:** Configure chapter scope, question count, random order, optional timing, unanswered-question confirmation, and post-attempt answer review.
+* **Progress Dashboard:** See actual attempted-question accuracy, chapter coverage, revision lists, and recent exam attempts without invented streaks.
+* **Portable Progress:** Export a versioned JSON progress file or safely merge a validated import in the current browser.
 
 ---
 
@@ -22,6 +26,8 @@ A high-performance, mobile-responsive web application designed for engineering s
 * **Frontend:** React, Vite, HTML5, CSS3 (Modern Flexbox & CSS Variables)
 * **State Management:** React Hooks (`useState`, `useMemo`, `useEffect`), LocalStorage API
 * **Version Control & Hosting:** Git, GitHub, Vercel / GitHub Pages
+
+Progress is stored locally in the browser under a versioned schema. Imports merge valid answers and saved lists; unknown question identifiers and malformed files are rejected safely.
 
 ---
 
