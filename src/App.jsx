@@ -2,6 +2,7 @@
 import { Code2, ContactRound, Globe, Moon, Sun } from 'lucide-react';
 import QuestionCard from './components/QuestionCard';
 import { chaptersConfig } from './data/mcqData';
+import { formatTime, shuffle } from './utils/helpers';
 
 const STORAGE_KEY = 'workshop_mcqs_state_v3';
 const STATE_VERSION = 3;
@@ -16,20 +17,6 @@ function readStoredState() {
   } catch {
     return defaults;
   }
-}
-
-function shuffle(items) {
-  const copy = [...items];
-  for (let index = copy.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1));
-    [copy[index], copy[swapIndex]] = [copy[swapIndex], copy[index]];
-  }
-  return copy;
-}
-
-function formatTime(seconds) {
-  const minutes = Math.floor(seconds / 60).toString().padStart(2, '0');
-  return `${minutes}:${(seconds % 60).toString().padStart(2, '0')}`;
 }
 
 export default function App() {
